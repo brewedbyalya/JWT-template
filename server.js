@@ -8,6 +8,7 @@ const logger = require('morgan');
 
 // Controllers
 const testJwtRouter = require('./controllers/test-jwt');
+const authRouter = require('./controllers/auth');
 
 // DB connection
 mongoose.connect(process.env.MONGODB_URI);
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(logger('dev'));
 
 // App.use routes
+app.use('/auth', authRouter);
 app.use('/test-jwt', testJwtRouter);
 
 // Public routes
