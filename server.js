@@ -9,6 +9,8 @@ const logger = require('morgan');
 // Controllers
 const testJwtRouter = require('./controllers/test-jwt');
 const authRouter = require('./controllers/auth');
+const verifyToken = require('./middleware/verify-token');
+const userRouter = require('./controllers/users')
 
 // DB connection
 mongoose.connect(process.env.MONGODB_URI);
@@ -22,14 +24,14 @@ app.use(cors());
 app.use(express.json());
 app.use(logger('dev'));
 
-// App.use routes
+// Public routes
 app.use('/auth', authRouter);
 app.use('/test-jwt', testJwtRouter);
 
-// Public routes
-
 
 // Protected routes
+app.use(verifyToken);
+app.use('/users', userRouter);
 
 // Server
 app.listen(3000, () => {
