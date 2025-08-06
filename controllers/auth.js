@@ -24,7 +24,7 @@ router.post('/sign-up', async (req, res) => {
         _id: user._id
     };
 
-    const token = jwt.sign({ payload }, process.env.JWT_SECRET);
+    const token = jwt.sign({ payload }, process.env.JWT_SECRET, {expiresIn: '7d'});
     res.status(201).json({ token });
 
   } catch (err) {
